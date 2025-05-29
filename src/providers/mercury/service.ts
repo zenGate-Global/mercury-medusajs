@@ -62,7 +62,8 @@ class MercuryProviderService extends AbstractPaymentProvider<Options> {
         return {
             data: {
                 id: input.id
-            }
+            },
+            status: "captured"
         }
     }
 

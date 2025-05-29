@@ -21,6 +21,8 @@ export const POST = async (
     const logger = req.scope.resolve(ContainerRegistrationKeys.LOGGER);
     const cardanoMercuryService: MercuryService = req.scope.resolve(MERCURY_MODULE);
 
+
+    // @ts-ignore
     const {order_id} = req.body;
 
     let address: GeneratedAddress;

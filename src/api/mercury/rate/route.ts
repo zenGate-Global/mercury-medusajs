@@ -8,7 +8,11 @@ export const POST = async (
     const query = req.scope.resolve(ContainerRegistrationKeys.QUERY);
     const logger = req.scope.resolve(ContainerRegistrationKeys.LOGGER);
 
-    const {from, to, amount} = req.body;
+    const {from, to, amount} = req.body as {
+        from: string
+        to: string
+        amount: number
+    };
 
     if (!from) {
         res.status(400).json({

@@ -11,7 +11,12 @@ export const POST = async (
     const logger = req.scope.resolve(ContainerRegistrationKeys.LOGGER);
     const paymentModuleService = req.scope.resolve(Modules.PAYMENT)
 
-    const {id, currency_code, amount, tx_hash} = req.body;
+    const {id, currency_code, amount, tx_hash} = req.body as {
+        id: string
+        currency_code: string
+        amount: number
+        tx_hash: string
+    };
 
     if (!id || !tx_hash) {
         res.status(400).json({
