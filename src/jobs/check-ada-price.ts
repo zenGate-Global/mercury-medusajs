@@ -26,7 +26,7 @@ export default async function checkAdaPriceJob(container: MedusaContainer): Prom
     const freshAdaPrice = new Date(Date.now() - (updateAdaPricePeriod * 60 * 1000));
 
     const {data: recentRates} = await query.graph({
-        entity: "mercury_rates",
+        entity: "mercury_rate",
         fields: ["*"],
         filters: {
             from: "USD",
@@ -62,7 +62,7 @@ export default async function checkAdaPriceJob(container: MedusaContainer): Prom
         }
 
         const {data: recentRates} = await query.graph({
-            entity: "mercury_rates",
+            entity: "mercury_rate",
             fields: ["*"],
             filters: {
                 from: currency.currency_code.toUpperCase(),

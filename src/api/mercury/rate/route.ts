@@ -38,7 +38,7 @@ export const POST = async (
         currency_rate = 1;
     } else {
         const {data: recentRates} = await query.graph({
-            entity: "mercury_rates",
+            entity: "mercury_rate",
             fields: ["*"],
             filters: {
                 from: from.toUpperCase(),
@@ -63,7 +63,7 @@ export const POST = async (
     }
 
     const {data: recentRates} = await query.graph({
-        entity: "mercury_rates",
+        entity: "mercury_rate",
         fields: ["*"],
         filters: {
             from: "USD",
