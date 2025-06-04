@@ -22,6 +22,7 @@ export const POST = async (
         res.status(400).json({
             message: `Bad request`
         })
+        return;
     }
 
     try {
@@ -50,7 +51,7 @@ export const POST = async (
             message: `Payment authorized`,
         })
     } catch (e) {
-        logger.error(`Could not update the payment session? ${e.message}`);
+        logger.error(`Could not update the payment session: ${e.message}`);
         res.status(400).json({
             success: false,
             message: e.message

@@ -22,7 +22,7 @@ export class OpenExchangeRate {
             console.error(`Could not fetch data from OpenExchangeRate: ${error}`);
 
             let code = 0;
-            let message = `Uknown Error`;
+            let message = `Unknown Error`;
 
             if (axios.isAxiosError(error)) {
                 code = error.response ? error.response.status : 500;
