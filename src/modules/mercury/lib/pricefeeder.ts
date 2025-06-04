@@ -42,7 +42,7 @@ export class Pricefeeder {
         ]);
 
         const prices = [hitbtc, coingecko].filter((p) => p != null);
-        const avg_price = parseFloat(
+        const avg_price = prices.length === 0 ? 0 : parseFloat(
             (prices.reduce((sum, p) => sum + Number(p), 0) / prices.length).toFixed(6)
         );
 
