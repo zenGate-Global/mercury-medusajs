@@ -1,9 +1,9 @@
 {
-  "name": "mercury-medusa-plugin",
-  "version": "0.0.1",
-  "description": "A starter for Medusa plugins.",
-  "author": "Medusa (https://medusajs.com)",
-  "license": "MIT",
+  "name": "@cardano-mercury/medusajs",
+  "version": "0.0.1-alpha",
+  "description": "Cardano Mercury Payments for Medusa JS",
+  "author": "Adam K. Dean <adam@crypto2099.io>",
+  "license": "Apache-2.0",
   "exports": {
     "./package.json": "./package.json",
     "./workflows": "./.medusa/server/src/workflows/index.js",
