@@ -1,64 +1,69 @@
-<p align="center">
-  <a href="https://www.medusajs.com">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/59018053/229103275-b5e482bb-4601-46e6-8142-244f531cebdb.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/59018053/229103726-e5b529a3-9b3f-4970-8a1f-c6af37f087bf.svg">
-    <img alt="Medusa logo" src="https://user-images.githubusercontent.com/59018053/229103726-e5b529a3-9b3f-4970-8a1f-c6af37f087bf.svg">
-    </picture>
-  </a>
-</p>
-<h1 align="center">
-  Medusa Plugin Starter
-</h1>
+# Cardano Mercury for Medusa JS
 
-<h4 align="center">
-  <a href="https://docs.medusajs.com">Documentation</a> |
-  <a href="https://www.medusajs.com">Website</a>
-</h4>
+> **IMPORTANT**: This software is still in an `alpha` developmental stage,
+> please do not use it in production unless you're sure of what you're doing.
 
-<p align="center">
-  Building blocks for digital commerce
-</p>
-<p align="center">
-  <a href="https://github.com/medusajs/medusa/blob/master/CONTRIBUTING.md">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="PRs welcome!" />
-  </a>
-    <a href="https://www.producthunt.com/posts/medusa"><img src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-%23DA552E" alt="Product Hunt"></a>
-  <a href="https://discord.gg/xpCwq3Kfn8">
-    <img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg" alt="Discord Chat" />
-  </a>
-  <a href="https://twitter.com/intent/follow?screen_name=medusajs">
-    <img src="https://img.shields.io/twitter/follow/medusajs.svg?label=Follow%20@medusajs" alt="Follow @medusajs" />
-  </a>
-</p>
+## Installation Instructions
 
-## Compatibility
+1. Include the package in your project: `npm i @cardano-mercury/medusajs`
+2. Update your `medusa-config.json` file to add the following values:
+   ```typescript
+   module.exports = defineConfig({
+    projectConfig: {},
+    plugins: [
+        {
+            resolve: "@cardano-mercury/medusajs",
+            options: {
+                fixerApiKey: "d311e...aae3",
+                currencyFreaksApiKey: "87b3...d5a6",
+                oxrAppId: "24e5...6ecb",
+                xPubKey: "xpub1pc20...6ald",
+            },
+        },
+    ],
+    modules: [
+        {
+            resolve: "@medusajs/medusa/payment",
+            options: {
+                providers: [
+                    {
+                        resolve: "@cardano-mercury/medusajs/providers/mercury",
+                        options: {
+                            fixerApiKey: "d311...aae3",
+                            xPubKey: "xpub1pc20...6ald",
+                            network: "preprod",
+                            apiKey: "..."
+                        }
+                    }
+                ]
+            }
+        }
+    ]})
+   ```
+   The most important of the variables for the plugin are the `network`,
+   `xPubKey` (should be exported from your Eternl Wallet), and `oxrAppId` which
+   can be acquired from Open Exchange Rates
+   here: [https://docs.openexchangerates.org/reference/api-introduction](https://docs.openexchangerates.org/reference/api-introduction).
+3. Modify your `.env` environment variables to include the following:
+   ```dotenv
+   WALLET_EXTENDED_PUBLIC_KEY=xpub1pc20...6ald
+   WALLET_NETWORK=preprod
+   KOIOS_API_URL=https://preprod.koios.rest
+   KOIOS_API_KEY=eyJh...VCJ9.eyJh...0oPw
+   UPDATE_ADA_PRICE_PERIOD=15
+   CHECK_ADA_PRICE_SCHEDULE="* * * * *"
+   UPDATE_UNPAID_SESSIONS="*/2 * * * *"
+   STALE_THRESHOLD_MINUTES=15
+   UPDATE_UNPAID_SESSIONS="*/5 * * * *"
+   ```
+   All of these are required and should match the environment you are using.
+4. You will need to customize your frontend structure to correctly connect a 
+   Cardano light wallet from the user and craft and submit the transaction.
 
-This starter is compatible with versions >= 2.4.0 of `@medusajs/medusa`. 
+## Known Issues
 
-## Getting Started
-
-Visit the [Quickstart Guide](https://docs.medusajs.com/learn/installation) to set up a server.
-
-Visit the [Plugins documentation](https://docs.medusajs.com/learn/fundamentals/plugins) to learn more about plugins and how to create them.
-
-Visit the [Docs](https://docs.medusajs.com/learn/installation#get-started) to learn more about our system requirements.
-
-## What is Medusa
-
-Medusa is a set of commerce modules and tools that allow you to build rich, reliable, and performant commerce applications without reinventing core commerce logic. The modules can be customized and used to build advanced ecommerce stores, marketplaces, or any product that needs foundational commerce primitives. All modules are open-source and freely available on npm.
-
-Learn more about [Medusa’s architecture](https://docs.medusajs.com/learn/introduction/architecture) and [commerce modules](https://docs.medusajs.com/learn/fundamentals/modules/commerce-modules) in the Docs.
-
-## Community & Contributions
-
-The community and core team are available in [GitHub Discussions](https://github.com/medusajs/medusa/discussions), where you can ask for support, discuss roadmap, and share ideas.
-
-Join our [Discord server](https://discord.com/invite/medusajs) to meet other community members.
-
-## Other channels
-
-- [GitHub Issues](https://github.com/medusajs/medusa/issues)
-- [Twitter](https://twitter.com/medusajs)
-- [LinkedIn](https://www.linkedin.com/company/medusajs)
-- [Medusa Blog](https://medusajs.com/blog/)
+- At the moment, the logic for updating currency conversion rates results in a 
+  large number of derived, child addresses being generated but never used when
+  an order is left unpaid for a long time. This should be addressed to keep a
+  single address attached to a single shopping cart in the future and allow for
+  address reuse if never used while the order fully expires.
