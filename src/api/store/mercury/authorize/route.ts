@@ -35,10 +35,10 @@ export const POST = async (
             }
         });
 
-        const payment = authorizePaymentSessionStep({
+        const payment = await paymentModuleService.authorizePaymentSession(
             id,
-            context: {} // The context can be empty since data is retrieved from the payment-session object.
-        })
+            {} // The context can be empty since data is retrieved from the payment-session object.
+        )
 
         // const payment = await processPaymentWorkflow(req.scope)
         //     .run({
