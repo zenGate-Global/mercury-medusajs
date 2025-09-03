@@ -1,6 +1,6 @@
 {
   "name": "@zengate/cardano-mercury-medusajs",
-  "version": "0.0.3-alpha",
+  "version": "0.0.4",
   "description": "Cardano Mercury Payments for Medusa JS",
   "author": "Adam K. Dean <adam@crypto2099.io>",
   "license": "Apache-2.0",
